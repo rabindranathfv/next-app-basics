@@ -9,18 +9,22 @@ interface Comment {
   text: string;
 }
 
+interface ICommentDetail {
+  coment: Comment;
+}
+
 const ComentsStyled = styled.p`
   font-size: 36px;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const CommentDetail = (props: any) => {
-  console.log("🚀 ~ file: [commentId].tsx:13 ~ CommentDetail ~ props", props);
+const CommentDetail = ({ coment }: ICommentDetail) => {
+  console.log("🚀 ~ file: [commentId].tsx:22 ~ CommentDetail ~ coment", coment);
 
   const router = useRouter();
   const { commentId } = router.query;
 
-  const [comment, setComment] = useState<Partial<Comment> | Comment>({});
+  const [comment, setComment] = useState<Partial<Comment> | Comment>(coment);
 
   const getCommentById = async (id: string | string[]) => {
     const resp = await fetch(`/api/comments/${id}`);
@@ -68,10 +72,11 @@ export async function getStaticProps(context: GetServerSidePropsContext) {
     `http://localhost:3000/api/comments/${params?.commentId}`
   );
   const data = await res.json();
+  console.log("🚀 ~ file: [commentId].tsx:75 ~ getStaticProps ~ data", data);
 
   return {
     props: {
-      comment: data,
+      coment: data,
     },
   };
 }

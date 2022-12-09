@@ -1,3 +1,5 @@
+import { GetServerSidePropsContext } from "next";
+import { getSession } from "next-auth/react";
 import React, { useState } from "react";
 
 interface Comment {
@@ -5,7 +7,7 @@ interface Comment {
   text: string;
 }
 
-const Comments = () => {
+const Comments = ({ commentsTitle }: string) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -39,6 +41,7 @@ const Comments = () => {
   return (
     <div>
       <h1>Comment page consume comments endpoint </h1>
+      {commentsTitle && <h3>{commentsTitle}</h3>}
 
       <input
         type="text"
@@ -68,3 +71,21 @@ const Comments = () => {
 };
 
 export default Comments;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session = await getSession(context);
+  console.log(
+    "🚀 ~ file: index.tsx:79 ~ comments.map ~ session HERE****",
+    session
+  );
+  return {
+    props: {
+      session,
+      commentsTitle: session
+        ? "list of PERZONALIZED Comments"
+        : "List of free comments",
+    },
+  };
+};

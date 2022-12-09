@@ -21,11 +21,37 @@ function Navbar() {
             </Link>
           )}
         </li>
-        <li>
-          <Link href="/blog">
-            <a>Blog</a>
-          </Link>
-        </li>
+        {session && (
+          <li>
+            <Link href="/blog">
+              <a>Blog</a>
+            </Link>
+          </li>
+        )}
+
+        {session && (
+          <li>
+            <Link href="/profile">
+              <a>Profile</a>
+            </Link>
+          </li>
+        )}
+
+        {session && (
+          <li>
+            <Link href="/product">
+              <a>Product</a>
+            </Link>
+          </li>
+        )}
+
+        {session && (
+          <li>
+            <Link href="/comments">
+              <a>Comments</a>
+            </Link>
+          </li>
+        )}
 
         {!session && (
           <li>

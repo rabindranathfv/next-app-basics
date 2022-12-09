@@ -1,12 +1,26 @@
 import type { NextPage } from "next";
+import { Session } from "next-auth/core/types";
+import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const [userInfo, setUserInfo] = useState<Promise<Session | null>>(null);
+
+  const checkAuth = async () => {
+    const session = await getSession();
+    console.log("🚀 ~ file: index.tsx:16 ~ checkAuth ~ session", session);
+    if (session) setUserInfo(session);
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const handleRedirect = () => {
     // programaticly routing
@@ -22,7 +36,8 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome {userInfo ? `${userInfo?.user?.name},` : ""} to{" "}
+          <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>

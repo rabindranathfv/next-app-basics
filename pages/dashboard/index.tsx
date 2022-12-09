@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getSession, signIn, signOut } from "next-auth/react";
 
 interface DashboardInfo {
   post: Number;
@@ -13,6 +14,14 @@ const Dashboard: () => React.ReactNode | React.ReactNode[] = () => {
 
   useEffect(() => {
     (async function fetchDasboard() {
+      const session = await getSession();
+      console.log("🚀 ~ file: index.tsx:18 ~ fetchDasboard ~ session", session);
+      if (!session) {
+        console.log("NO ESTA LOGEADO*******************");
+        signIn();
+      } else {
+        setisLoading(false);
+      }
       const fetchUrl = `http://localhost:4000/dashboard`;
       const resp = await fetch(fetchUrl);
       const data = await resp.json();

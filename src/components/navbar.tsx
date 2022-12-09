@@ -3,8 +3,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 function Navbar() {
   const { data: session, status: loading } = useSession();
-  console.log("🚀 ~ file: navbar.tsx:6 ~ Navbar ~ loading", loading);
-  console.log("🚀 ~ file: navbar.tsx:6 ~ Navbar ~ session", session);
   return (
     <nav className="header">
       <h1 className="logo">
@@ -17,9 +15,11 @@ function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/dashboard">
-            <a>Dashboard</a>
-          </Link>
+          {session && (
+            <Link href="/dashboard">
+              <a>Dashboard</a>
+            </Link>
+          )}
         </li>
         <li>
           <Link href="/blog">

@@ -76,10 +76,16 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const session = await getSession(context);
-  console.log(
-    "🚀 ~ file: index.tsx:79 ~ comments.map ~ session HERE****",
-    session
-  );
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `api/auth/signin?callbackUrl=http://localhost:3000/comments`,
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       session,

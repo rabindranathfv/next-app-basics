@@ -15,7 +15,6 @@ const Dashboard: () => React.ReactNode | React.ReactNode[] = () => {
   useEffect(() => {
     (async function fetchDasboard() {
       const session = await getSession();
-      console.log("🚀 ~ file: index.tsx:18 ~ fetchDasboard ~ session", session);
       if (!session) {
         console.log("NO ESTA LOGEADO*******************");
         signIn();

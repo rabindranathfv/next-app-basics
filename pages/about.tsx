@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import Footer from "../src/components/footer";
@@ -38,6 +39,10 @@ About.getLayout = function PageLayout(page: NextPage) {
 };
 
 export async function getServerSideProps() {
+  const fetchUrl = `http://localhost:3000/about`;
+  const resp = await fetch(fetchUrl);
+  const data = await resp.json();
+  console.log("🚀 ~ file: about.tsx:45 ~ getServerSideProps ~ data", data);
   return {
     props: {
       title: "About page",

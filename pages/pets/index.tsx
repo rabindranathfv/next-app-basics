@@ -10,6 +10,7 @@ const Pets = () => {
           placeholder="blur"
           //   special option for more optimization
           //   blurDataURL=""
+          loading="lazy"
           alt="pet"
           width={"280px"}
           height={"420px"}
@@ -24,6 +25,7 @@ const Pets = () => {
               alt={`pets animal ${path}.jpg`}
               width={"280px"}
               height={"420px"}
+              loading="lazy"
             />
           </div>
         );
